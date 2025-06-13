@@ -44,7 +44,7 @@ const TitleContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  gap: 20px;
+  gap: 30px;
 `;
 
 const FixedTopLinks = styled.div`

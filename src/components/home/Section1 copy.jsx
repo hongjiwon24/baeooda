@@ -25,18 +25,6 @@ const courseCards = {
       image: '/images/best3.jpg',
       info: { level: '초급', day: '14일', time: '1년' }
     },
-    {
-      title: '풀스택',
-      desc: '이젠 알 수 있다,\n풀스택 딥러닝',
-      image: '/images/best2.jpg',
-      info: { level: '고급', day: '150일', time: '1년' }
-    },
-    {
-      title: '사진/영상',
-      desc: '추억을 남겨요.\n사진을 남겨요',
-      image: '/images/best3.jpg',
-      info: { level: '초급', day: '14일', time: '1년' }
-    },
   ],
   '비즈니스·경제': [
     {
@@ -131,11 +119,15 @@ const BestSection = () => {
           maxWidth: '1350px',
           margin: '0 auto',
           display: 'flex',
-          flexDirection: 'column',
+          padding: '34px 32px',
           gap: '34px',
           minHeight: '290px',
+          alignItems: 'center',
           justifyContent: 'center',
           boxSizing: 'border-box',
+          borderRadius: '16px',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+          border: '2px solid rgb(191, 215, 227)',
           overflow: 'hidden',
           backgroundColor:' rgb(255, 255, 255)'
         }}
@@ -144,6 +136,7 @@ const BestSection = () => {
         <div style={{
           minWidth: '140px',
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'flex-start',
           justifyContent: 'flex-start',
           gap: '5px'
@@ -194,7 +187,7 @@ const BestSection = () => {
             maxWidth: '800px',
             justifyContent: 'flex-start'
           }}>
-            {courseCards[selectedCategory]?.slice(0, 5).map((item, idx) => ( // 카드 5개씩 나오게
+            {courseCards[selectedCategory]?.map((item, idx) => (
               <Link 
                 to={`/courses/${encodeURIComponent(item.title)}`}
                 key={idx}
@@ -273,6 +266,63 @@ const BestSection = () => {
                 </div>
               </Link>
             ))}
+          </div>
+
+          {/* 우측 버튼/설명 */}
+          <div style={{
+            width: '100%',
+            minWidth: '240px',
+            borderRadius: '12px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginLeft: '16px'
+          }}>
+            <div style={{
+              fontSize: '15px',
+              color: '#739CC2',
+              marginBottom: '21px',
+              textAlign: 'center',
+              fontWeight: 500,
+              width: '100%'
+            }}>
+              {selectedCategory} 분야 강의가 <br></br>더 궁금하다면?
+            </div>
+            <Link
+              to="/CourseList"
+              state={{ category: selectedCategory, subCategory: '프론트엔드' }}
+              style={{
+                display: 'flex', // 변경
+                alignItems: 'center', // 추가
+                justifyContent: 'center',
+                gap: '6px', // 텍스트와 화살표 간 거리
+                padding: '10px',
+                width: '220px',
+                height: '30px',
+                background: 'linear-gradient(90deg, #4C779F, #4699AF 100%)',
+                color: '#fff',
+                borderRadius: '60px',
+                border: 'none',
+                fontWeight: 600,
+                cursor: 'pointer',
+                fontSize: '15px',
+                boxShadow: '0 2px 8px rgba(52,151,214,0.08)',
+                textAlign: 'center',
+                textDecoration: 'none',
+                transition: 'transform 0.2s ease',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.02)')}
+              onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
+            >
+              <span>{selectedCategory} 분야 더보기</span>
+              <img 
+                src="/icons/arrow.svg" 
+                alt="화살표"
+                style={{ width: '20px', height: '20px' }}
+              />
+            </Link>
+
           </div>
         </div>
       </div>
