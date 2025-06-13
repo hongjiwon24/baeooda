@@ -33,88 +33,89 @@ const LoginForm = () => {
   };
 
   return (
-    <div
-      style={{
-        width: '298px',
-        height: '254px',
-        padding: '25px 32px',
-        borderRadius: '16px',
-        border: '1px solid #eee',
-        backgroundColor: '#fff',
-        textAlign: 'center',
-        fontFamily: 'sans-serif',
-        boxSizing: 'border-box',
-        boxShadow: '0 2px 6px 0 rgba(0,0,0,.06)',
-      }}
-    >
+    <div style={{ margin: '220px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div
         style={{
-          display: 'flex',
-          alignItems: 'end',
-          justifyContent: 'space-between',
-          gap: '10px',
-          marginBottom: '16px',
+          width: '298px',
+          height: '254px',
+          padding: '25px 32px',
+          borderRadius: '16px',
+          border: '1px solid #eee',
+          backgroundColor: '#fff',
+          textAlign: 'center',
+          fontFamily: 'sans-serif',
+          boxSizing: 'border-box',
+          boxShadow: '0 2px 6px 0 rgba(0,0,0,.06)',
         }}
       >
-        <h2 style={{ fontSize: '18px', fontWeight: 'bold', margin: 0 }}>로그인</h2>
-        {/* <p style={{ margin: 0, color: '#BCBCBC' }}>/</p> */}
-        {/* <Link to="/home" style={{ color: '#BCBCBC', fontWeight: 'bold', display: 'block' }}>
-          회원가입
-        </Link> */}
-        {/* <Link to="/home" style={{ color: 'white', fontSize: '13px', fontWeight: 'bold', display: 'block', backgroundColor: '#ccc', padding: '3px 9px', borderRadius: '10px' }}>
-          회원가입 ↗
-        </Link> */}
-      </div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'end',
+            justifyContent: 'space-between',
+            gap: '10px',
+            marginBottom: '16px',
+          }}
+        >
+          <h2 style={{ fontSize: '18px', fontWeight: 'bold', margin: 0 }}>로그인</h2>
+          {/* <p style={{ margin: 0, color: '#BCBCBC' }}>/</p> */}
+          {/* <Link to="/home" style={{ color: '#BCBCBC', fontWeight: 'bold', display: 'block' }}>
+            회원가입
+          </Link> */}
+          {/* <Link to="/home" style={{ color: 'white', fontSize: '13px', fontWeight: 'bold', display: 'block', backgroundColor: '#ccc', padding: '3px 9px', borderRadius: '10px' }}>
+            회원가입 ↗
+          </Link> */}
+        </div>
 
-<MainStyleInput>
-  <StyledInput
-    type="email"
-    value={email}
-    onChange={(e) => setEmail(e.target.value)}
-    placeholder="이메일"
-    style={{ borderRadius: '4px 4px 0px 0px' }}
-  />
+        <MainStyleInput>
+          <StyledInput
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="이메일"
+            style={{ borderRadius: '4px 4px 0px 0px' }}
+          />
 
-  <div style={{ height: '1px', backgroundColor: '#ddd' }} />
+          <div style={{ height: '1px', backgroundColor: '#ddd' }} />
 
-  <StyledInput
-    type="password"
-    value={password}
-    onChange={(e) => setPassword(e.target.value)}
-    placeholder="비밀번호"
-    style={{ borderRadius: '0px 0px 4px 4px', marginTop: '1px' }}
-  />
-</MainStyleInput>
+          <StyledInput
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="비밀번호"
+            style={{ borderRadius: '0px 0px 4px 4px', marginTop: '1px' }}
+          />
+        </MainStyleInput>
 
 
-      <button
-        onClick={handleLogin}
+        <button
+          onClick={handleLogin}
+          style={{
+            width: '100%',
+            padding: '13px',
+            borderRadius: '4px',
+            backgroundColor: '#4C779F',
+            color: 'white',
+            fontWeight: 'bold',
+            border: 'none',
+            cursor: 'pointer',
+            marginTop: '10px',
+          }}
+        >
+          로그인
+        </button>
+        <Link to="/home"
         style={{
-          width: '100%',
-          padding: '13px',
+          color: 'rgb(103, 103, 103)',
+          fontSize: '12px', fontWeight:'bold',
+          display: 'block',
+          padding: '3px 9px',
           borderRadius: '4px',
-          backgroundColor: '#4C779F',
-          color: 'white',
-          fontWeight: 'bold',
-          border: 'none',
-          cursor: 'pointer',
-          marginTop: '10px',
-        }}
-      >
-        로그인
-      </button>
-      <Link to="/home"
-      style={{
-        color: 'rgb(103, 103, 103)',
-        fontSize: '12px', fontWeight:'bold',
-        display: 'block',
-        padding: '3px 9px',
-        borderRadius: '4px',
-        textDecoration: 'underline' }}>
-          이메일로 가입하기
-      </Link>
+          textDecoration: 'underline' }}>
+            이메일로 가입하기
+        </Link>
+      </div>
     </div>
-    
   );
 };
 

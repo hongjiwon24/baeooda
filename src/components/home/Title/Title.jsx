@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import Login from './Login'
 // const titleImg = '/images/title_img.jpg';
 const titleImg = '/images/camera.png';
 
@@ -56,7 +55,6 @@ const Title = () => {
         <img src="/icons/heart.svg" alt="찜목록" style={{ width: '28px', height: '28px' }} />
         </Link> */}
         
-        {/* <Login /> */}
 
       </div>
     </div>
