@@ -75,7 +75,7 @@ const Header = () => {
               <img
                 src="/logo.svg"
                 alt="Baeooda 로고"
-                style={{ height: '35px' }}
+                style={{ height: '32px' }}
               />
             </h1>
           </Link>
