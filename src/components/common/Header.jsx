@@ -189,7 +189,7 @@ const handleSubClick = (mainCategory, sub) => {
                   <button
                     onClick={handleEventClick}
                     style={{ background: 'none', border: 'none', color: 'black', fontSize: '16px', cursor: 'pointer', padding: '12px', fontWeight: 'bold' }}>
-                    이벤트
+                    🎉오픈 특가
                   </button>
                 </li>
               </ul>
