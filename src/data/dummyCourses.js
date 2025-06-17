@@ -273,7 +273,7 @@ const dummyCourses = [
     originalPrice: '₩90,000',
     image: '/course/course_life_01.jpg',
     author: '권도윤',
-    tag: ['엑셀', '구글', '스프레드시트'],
+    tag: ['엑셀', '구글',],
     info: { level: '초급', day: '35일' }
   },
 

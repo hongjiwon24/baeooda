@@ -229,16 +229,8 @@ const BestSection = () => {
         maxWidth: '1350px',
         marginTop: 0, 
         paddingTop: 0, 
-        marginBottom: '19px',
       }}>
-        <img
-        src="/grass.svg"
-        alt="grass"
-        style={{ width: '25px', height: '25px', marginRight: '4px' }}/>
-        <h2>
-          <span style={{ color: '#42B2BB', fontWeight: 700 }}>BEST</span>
-          <span style={{ color: '#222', fontWeight: 700, marginLeft: 4 }}>강의 모음</span>
-        </h2>
+        <h2 style={{ marginBottom: '10px', fontSize: '22px'}}>이번주 TOP5</h2>
       </div>
 
       {/* 메인 박스 */}

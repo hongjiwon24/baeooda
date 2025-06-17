@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+const keywords = [
+  { text: '프론트엔드', path: '/search?keyword=프론트엔드' },
+  { text: '마케팅', path: '/search?keyword=마케팅' },
+  { text: '사주', path: '/search?keyword=사주' },
+  { text: '글쓰기', path: '/search?keyword=글쓰기' },
+  { text: '자격증 준비', path: '/search?keyword=자격증 준비' },
+  { text: '디자인', path: '/search?keyword=디자인' },
+  { text: '타로', path: '/search?keyword=타로' },
+];
 
 const Title = () => {
   const [keyword, setKeyword] = useState('');
@@ -12,7 +22,7 @@ const Title = () => {
   };
 
   return (
-    <div style={{ width: '1350px' }}>
+    <div style={{ width: '1350px', display: 'flex', justifyContent: 'space-between', }}>
       <div
         style={{
           display: 'flex',
@@ -23,19 +33,15 @@ const Title = () => {
       >
         {/* 배너, 글 */}
         <div style={{ flex: '1', minWidth: '300px' }}>
-          <h1 style={{ margin: 0 }}>
-            <img src="/logo.svg" alt="로고" style={{ height: '49px' }} />
-          </h1>
           <p
             style={{
-              color: '#254D72',
-              fontSize: '20px',
+              color: 'black',
+              fontSize: '34px',
               fontWeight: 'bold',
-              margin: '30px 0',
+              margin: '30px 0 31px 20px',
             }}
           >
-            맞춤형 학습 관리를 지원하는<br />
-            미래형 AI 코스웨어, AI 클래스
+            취미부터 커리어까지, <br />당신에게 딱 맞는 배움을 만나보세요
           </p>
 
           {/* 검색창 */}
@@ -59,12 +65,42 @@ const Title = () => {
               width: '77%',
               maxWidth: '640px',
               transition: 'border 0.3s',
+              marginBottom: '22px',
             }}
           />
+
+          {/* 추천 키워드 버튼 */}
+          <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', marginLeft: '20px', marginBottom: '20px' }}>
+            {keywords.map((item, idx) => (
+              <button
+                key={idx}
+                onClick={() => navigate(item.path)}
+                style={keywordStyle}
+              >
+                {item.text}
+              </button>
+            ))}
+          </div>
         </div>
+      </div>
+
+      {/* 오른쪽 일러스트 */}
+      <div>
+        <img src="/public/images/title_img_01.png" alt="타이틀 일러스트"
+        style={{ width: '332px', height: '332px' }}
+        />
       </div>
     </div>
   );
+};
+
+const keywordStyle = {
+  backgroundColor: 'rgb(240, 242, 242)',
+  border: 'none',
+  color: 'rgb(89, 90, 90)',
+  fontSize: '14px',
+  cursor: 'pointer',
+  padding: '10px 15px',
 };
 
 export default Title;

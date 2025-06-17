@@ -18,10 +18,29 @@ const Header = () => {
   const [keyword, setKeyword] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [recentKeywords, setRecentKeywords] = useState([]);
-  const [activeOverlay, setActiveOverlay] = useState(null); // 'search' | 'category' | null
-const isFocused = activeOverlay === 'search';
-const isOpen = activeOverlay === 'category';
-  
+  const [activeOverlay, setActiveOverlay] = useState(null);
+  const [scrollbarWidth, setScrollbarWidth] = useState(0);
+  const isFocused = activeOverlay === 'search';
+  const isOpen = activeOverlay === 'category';
+
+  useEffect(() => {
+    const width = window.innerWidth - document.documentElement.clientWidth;
+    setScrollbarWidth(width);
+  }, []);
+
+  useEffect(() => {
+    if (activeOverlay) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    };
+  }, [activeOverlay, scrollbarWidth]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -41,13 +60,6 @@ const isOpen = activeOverlay === 'category';
     const saved = JSON.parse(localStorage.getItem('recentKeywords')) || [];
     setRecentKeywords(saved);
   }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = activeOverlay ? 'hidden' : 'auto';
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [activeOverlay]);
 
   const saveKeyword = (newKeyword) => {
     if (!newKeyword) return;
@@ -113,27 +125,18 @@ const isOpen = activeOverlay === 'category';
     localStorage.removeItem('recentKeywords');
   };
 
-const handleSubClick = (mainCategory, sub) => {
-  const mainSlug = mainSlugMap[mainCategory];
-  const subSlug = sub.slug;
-
-  // 오버레이를 먼저 끄고,
-  setActiveOverlay(null);
-
-  // navigate를 조금 지연시켜서 DOM이 완전히 정리된 후 실행
-  setTimeout(() => {
-    navigate(`/courses/${mainSlug}/${subSlug}`);
-  }, 100); // 💡 100ms 정도면 충분
-};
-
-
-
+  const handleSubClick = (mainCategory, sub) => {
+    const mainSlug = mainSlugMap[mainCategory];
+    const subSlug = sub.slug;
+    setActiveOverlay(null);
+    setTimeout(() => {
+      navigate(`/courses/${mainSlug}/${subSlug}`);
+    }, 100);
+  };
 
   const handleEventClick = () => {
     navigate('/event');
   };
-
-  
 
   return (
     <>
@@ -147,24 +150,31 @@ const handleSubClick = (mainCategory, sub) => {
             position: 'fixed',
             top: 0,
             left: 0,
-            width: '100vw',
+            width: `calc(100vw - ${scrollbarWidth}px)`,
             height: '100vh',
             backgroundColor: 'rgba(0, 0, 0, 0.3)',
             zIndex: 1000,
-            transition: 'background-color 0.2s ease',
           }}
         />
       )}
 
-
-      <header style={{ width: '100vw', position: 'absolute', left: '50%', marginLeft: '-50vw', backgroundColor: '#fff', zIndex: 1001 }}>
+      <header style={{
+        width: `calc(100vw - ${scrollbarWidth}px)`,
+        position: 'fixed',
+        left: 0,
+        top: 0,
+        backgroundColor: '#fff',
+        zIndex: 1001
+      }}>
         <div style={{ maxWidth: '1350px', margin: '5px auto', padding: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          
+          {/* 로고, nav */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
             <Link to="/">
               <img src="/logo.svg" alt="Logo" style={{ height: '23px' }} />
             </Link>
             <nav>
-              <ul style={{ display: 'flex', listStyle: 'none', padding: 0, margin: 0 }}>
+              <ul style={{ display: 'flex', alignItems: 'center', listStyle: 'none', padding: 0, margin: 0 }}>
                 <li ref={dropdownRef} style={{ position: 'relative' }}>
                   <button
                     onClick={() => setActiveOverlay(activeOverlay === 'category' ? null : 'category')}
@@ -178,24 +188,94 @@ const handleSubClick = (mainCategory, sub) => {
                       fontWeight: 'bold',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '6px',
-                    }}
-                  >
-                    카테고리
-                    <img src="/icons/menu.svg" alt="Menu" style={{ height: '11px', width: '11px' }} />
+                      gap: '6px'
+                    }}>
+                    카테고리 <img src="/icons/menu.svg" alt="Menu" style={{ height: '11px', width: '11px' }} />
                   </button>
                 </li>
                 <li>
-                  <button
-                    onClick={handleEventClick}
-                    style={{ background: 'none', border: 'none', color: 'black', fontSize: '16px', cursor: 'pointer', padding: '12px', fontWeight: 'bold' }}>
-                    🎉오픈 특가
-                  </button>
+                  <Link onClick={handleEventClick} style={{
+                    background: 'none',
+                    border: 'none',
+                    color: 'black',
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                    padding: '12px',
+                    fontWeight: 'bold'
+                  }}>
+                    🎉오픈특가
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/event"
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: 'black',
+                      fontSize: '16px',
+                      cursor: 'pointer',
+                      padding: '12px',
+                      fontWeight: 'bold',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    🌊여름특가10만원
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/event"
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: 'black',
+                      fontSize: '16px',
+                      cursor: 'pointer',
+                      padding: '12px',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    베스트
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/event"
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: 'black',
+                      fontSize: '16px',
+                      cursor: 'pointer',
+                      padding: '12px',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    신규
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/event"
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: 'black',
+                      fontSize: '16px',
+                      cursor: 'pointer',
+                      padding: '12px',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    오픈예정
+                  </Link>
                 </li>
               </ul>
             </nav>
           </div>
 
+          {/* 검색창 */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '35px' }}>
             <div style={{ position: 'relative', zIndex: 1002 }} ref={wrapperRef}>
               <SearchWrapper>
@@ -213,7 +293,6 @@ const handleSubClick = (mainCategory, sub) => {
                   <ClearButton onClick={handleSearchReset} aria-label="검색어 초기화">&times;</ClearButton>
                 )}
               </SearchWrapper>
-
               {isFocused && (
                 keyword.trim() && suggestions.length > 0 ? (
                   <SuggestionBox>
@@ -241,42 +320,40 @@ const handleSubClick = (mainCategory, sub) => {
                 )
               )}
             </div>
-            <div style={{ display: 'flex', gap: '20px',}}>
+            <div style={{ display: 'flex', gap: '20px' }}>
               <Link to="/login" style={{ fontSize: '14px', color: 'black' }}>로그인</Link>
               <Link to="/Signup" style={{ fontSize: '14px', color: 'black' }}>회원가입</Link>
             </div>
           </div>
         </div>
-
-        {/* 드롭박스 */}
-        <DropdownWrapper isOpen={isOpen}>
-          <DropdownInner>
-            {Object.entries(allCourses).map(([mainCategory, subList]) => (
-              <div key={mainCategory} style={{ width: '130px', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontWeight: 'bold', fontSize: '15px', marginBottom: '10px', color: '#222', whiteSpace: 'nowrap', borderBottom: '5px solid #ddd', paddingBottom: '10px' }}>{mainCategory}</div>
-                <ul style={{ listStyle: 'none', margin: 0, padding: 0, maxHeight: '180px', overflowY: 'auto' }}>
-                  {subList.map((sub, idx) => (
-                    <li
-                      key={idx}
-                      onMouseDown={() => handleSubClick(mainCategory, sub)}
-                      style={{
-                        cursor: 'pointer',
-                        fontSize: '14px',
-                        padding: '8px 0',
-                        color: '#444',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {sub.title}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </DropdownInner>
-        </DropdownWrapper>
-
       </header>
+      
+
+      {/* 드롭 박스 */}
+      <DropdownWrapper isOpen={isOpen} style={{ width: `calc(100vw - ${scrollbarWidth}px)` }}>
+        <DropdownInner>
+          {Object.entries(allCourses).map(([mainCategory, subList]) => (
+            <div key={mainCategory} style={{ width: '130px', display: 'flex', flexDirection: 'column' }}>
+              <div style={{
+                fontWeight: 'bold', fontSize: '17px', marginBottom: '10px',
+                color: '#222', whiteSpace: 'nowrap', borderBottom: '5px solid #ddd', paddingBottom: '10px'
+              }}>
+                {mainCategory}
+              </div>
+              <ul style={{ listStyle: 'none', margin: 0, padding: 0, maxHeight: '180px', overflowY: 'auto' }}>
+                {subList.map((sub, idx) => (
+                  <SubCategoryItem
+                    key={idx}
+                    onMouseDown={() => handleSubClick(mainCategory, sub)}
+                  >
+                    {sub.title}
+                  </SubCategoryItem>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </DropdownInner>
+      </DropdownWrapper>
     </>
   );
 };
@@ -408,12 +485,11 @@ const HighlightedText = styled.span`
   color: rgb(247, 111, 21);
 `;
 
-// 드롭박스 스타일
+// 드롭박스 스타일링
 const DropdownWrapper = styled.div`
-  position: absolute;
-  top: 100%; /* 헤더 바로 아래 */
+  position: fixed;
+  top: 70px;
   left: 0;
-  width: 100vw;
   transform: ${({ isOpen }) => (isOpen ? 'translateY(0)' : 'translateY(-20px)')};
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
@@ -423,13 +499,25 @@ const DropdownWrapper = styled.div`
   border-top: 1px solid #ededed;
 `;
 
-
 const DropdownInner = styled.div`
   max-width: 1350px;
   margin: 0 auto;
-  padding: 30px 0 40px 0;
+  padding: 35px 0 60px 0;
   display: flex;
   gap: 40px;
+`;
+
+const SubCategoryItem = styled.li`
+  cursor: pointer;
+  font-size: 16px;
+  padding: 8px 0;
+  color: #444;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #f76f15; /* 원하는 색으로 변경 가능 */
+  }
 `;
 
 

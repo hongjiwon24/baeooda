@@ -34,6 +34,12 @@ body {
   min-height: 100vh;
   justify-content: center;
   overflow-x: hidden;
+  scrollbar-gutter: stable;
+}
+
+body.no-scroll {
+  overflow: hidden;
+  padding-right: 17px; /* 윈도우 기본 스크롤 너비 */
 }
 
 /* button {

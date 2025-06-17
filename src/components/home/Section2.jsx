@@ -128,7 +128,7 @@ const CourseCards = ({ data }) => (
         position: 'relative',
         cursor: 'pointer',
         alignItems: 'center',
-        margin: '10px 10px'
+        margin: '10px 7px'
       }}
       onMouseEnter={e => {
         const img = e.currentTarget.querySelector('img');
@@ -224,14 +224,11 @@ const CustomNextArrow = ({ onClick }) => (
     onClick={onClick}
     style={{
       position: 'absolute',
-      right: -51,
-      top: '50%',
+      right: 0,
+      top: '-22px',
       transform: 'translateY(-50%)',
       width: 36,
-      height: 112,
-      background: '#f5fafd',
-      borderRadius: '14px',
-      boxShadow: '0 0 0 2px #e4f2fa',
+      height: 36,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -250,14 +247,11 @@ const CustomPrevArrow = ({ onClick }) => (
     onClick={onClick}
     style={{
       position: 'absolute',
-      left: -52,
-      top: '50%',
+      right: '50px',
+      top: '-22px',
       transform: 'translateY(-50%)',
       width: 36,
-      height: 112,
-      background: '#f5fafd',
-      borderRadius: '14px',
-      boxShadow: '0 0 0 2px #e4f2fa',
+      height: 36,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -274,7 +268,7 @@ const CustomPrevArrow = ({ onClick }) => (
 const NewSection = () => {
   const sliderSettings = {
     infinite: false,
-    slidesToShow: 4.7,
+    slidesToShow: 5,
     slidesToScroll: 1,
     arrows: true,
     centerMode: false,
@@ -290,16 +284,8 @@ const NewSection = () => {
         maxWidth: '1350px',
         marginTop: 0, 
         paddingTop: 0, 
-        marginBottom: '19px',
       }}>
-        <img
-        src="/grass.svg"
-        alt="grass"
-        style={{ width: '25px', height: '25px', marginRight: '4px' }}/>
-        <h2>
-          <span style={{ color: '#42B2BB', fontWeight: 700 }}>신규</span>
-          <span style={{ color: '#222', fontWeight: 700, marginLeft: 4 }}>강의 모음</span>
-        </h2>
+        <h2 style={{ marginBottom: '10px', fontSize: '22px'}}>이번달 신규 클래스</h2>
       </div>
 
       <div style={{

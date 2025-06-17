@@ -43,7 +43,7 @@ const CourseList = () => {
           fontSize: '18px',
           fontWeight: 'bold',
           padding: '17px 28px',
-          borderRadius: '7px 7px 0 0',
+          // borderRadius: '7px 7px 0 0',
           color: 'white'
         }}>
           {mainCategory}
@@ -51,7 +51,7 @@ const CourseList = () => {
         <ul style={{
           border: '1px solid #E6E6E6',
           borderTop: 'none',
-          borderRadius: '0 0 7px 7px',
+          // borderRadius: '0 0 7px 7px',
           margin: 0,
           padding: 0
         }}>
