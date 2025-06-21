@@ -184,10 +184,28 @@ export default function Terms() {
         다음으로
       </button>
 
-      <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '13.5px', color: 'rgb(106, 109, 117)' }}>
-        이미 가입된 계정이 있나요?&nbsp;
-        <Link to="/auth?mode=login" style={{ color: 'rgb(106, 109, 117)', fontWeight: 600, textDecoration: 'underline', fontSize: '13.5px' }}>
-          로그인하기
+      <div style={{
+        display: 'flex',
+        gap: '6px',
+        marginTop: '8px', 
+        width: '100%',
+        justifyContent: 'center',
+
+        }}>
+        <p  style={{
+        color: 'rgb(153, 153, 153)',
+        fontSize: '13.5px',
+        margin: '0  0'
+        }}>
+        이미 가입된 계정이 있으신가요?
+        </p> 
+        <Link to="/auth?mode=login" style={{
+        color: 'rgb(106, 109, 117)',
+        fontSize: '13.5px',
+        fontWeight: 'bold',
+        textDecoration: 'underline'
+        }}>
+        로그인
         </Link>
       </div>
 

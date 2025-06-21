@@ -241,17 +241,34 @@ const SignupForm = () => {
       <button
         id="submit-btn"
         type="submit"
-        style={{ ...baseButtonStyle, backgroundColor: '#d04444', width: '100%', marginTop: '20px' }}
+        style={{ ...baseButtonStyle, backgroundColor: '#d04444', width: '100%', marginTop: '16px' }}
       >
         가입하기
       </button>
+          <div style={{
+            display: 'flex',
+            gap: '6px',
+            marginTop: '8px', 
+            width: '100%',
+            justifyContent: 'center',
 
-      <p style={{ textAlign: 'center', fontSize: '13px', color: '#999', marginTop: '16px' }}>
-        이미 가입된 계정이 있으신가요?{' '}
-        <Link to="/auth?mode=login" style={{ color: '#333', fontWeight: 600, textDecoration: 'underline' }}>
-          로그인하기
-        </Link>
-      </p>
+            }}>
+            <p  style={{
+            color: 'rgb(153, 153, 153)',
+            fontSize: '13.5px',
+            margin: '0  0'
+            }}>
+            이미 가입된 계정이 있으신가요?
+            </p> 
+            <Link to="/auth?mode=login" style={{
+            color: 'rgb(106, 109, 117)',
+            fontSize: '13.5px',
+            fontWeight: 'bold',
+            textDecoration: 'underline'
+            }}>
+            로그인
+            </Link>
+          </div>
     </div>
   );
 };
@@ -269,12 +286,12 @@ const inputStyle = {
 
 const baseButtonStyle = {
   padding: '12px 0',
-  fontSize: '13px',
+  fontSize: '14px',
   fontWeight: 'bold',
   color: '#fff',
   border: 'none',
   borderRadius: '6px',
-  height: '42px',
+  height: '45px',
   cursor: 'pointer',
   width: '100%',
 };
