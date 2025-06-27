@@ -25,6 +25,7 @@ const Header = () => {
   const [recentKeywords, setRecentKeywords] = useState([]);
   const [activeOverlay, setActiveOverlay] = useState(null);
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
+  const [cartCount, setCartCount] = useState(0)
 
   const isFocused = activeOverlay === 'search';
   const isOpen = activeOverlay === 'category';
@@ -64,6 +65,28 @@ const Header = () => {
     const saved = JSON.parse(localStorage.getItem('recentKeywords')) || [];
     setRecentKeywords(saved);
   }, []);
+
+  // 장바구니 개수 로딩
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    setCartCount(storedCart.length);
+  }, []);
+
+  useEffect(() => {
+  const updateCartCount = () => {
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    setCartCount(storedCart.length);
+  };
+
+  window.addEventListener('cartUpdated', updateCartCount); // 커스텀 이벤트 감지
+  updateCartCount(); // 초기값 설정
+
+  
+  return () => {
+    window.removeEventListener('cartUpdated', updateCartCount);
+  };
+}, []);
+
 
   const saveKeyword = (newKeyword) => {
     if (!newKeyword) return;
@@ -142,6 +165,7 @@ const Header = () => {
   const handleEventClick = () => {
     navigate('/event');
   };
+  
 
   return (
     <>
@@ -252,9 +276,34 @@ const Header = () => {
             </div>
         {/* 오른쪽 - 로그인/회원가입 또는 프로필 */}
         <AuthLinks>
+          {/* 장바구니 아이콘 + 뱃지 */}
+          <div style={{ position: 'relative', marginRight: '10px', top: '3px' }}>
+            <Link to="/cart" style={{ display: 'inline-block' }}>
+              <img src="/icons/cart.svg" alt="장바구니" style={{ width: '26px', height: '26px' }} />
+            </Link>
+            {cartCount > 0 && (
+              <div style={{
+                position: 'absolute',
+                top: '-6px',
+                right: '-6px',
+                backgroundColor: '#ff5722',
+                color: 'white',
+                borderRadius: '50%',
+                width: '18px',
+                height: '18px',
+                fontSize: '12px',
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+                {cartCount}
+              </div>
+            )}
+          </div>
+
           {user ? (
             <>
-              <Link to="/favorite" style={{ fontSize: '14px', color: 'black' }}>찜하기</Link>
               <div ref={profileRef} style={{ position: 'relative' }}>
                 <button
                   type="button" 
@@ -292,7 +341,7 @@ const Header = () => {
                       <strong style={{ display: 'block', fontSize: '15px' }}> {user.nickname || user.name || user.username}</strong>
                       <span style={{ fontSize: '13px', color: '#666', marginLeft: '12px' }}>{user.email}</span>
                     </div>
-                    <Link to="/cart" style={menuItemStyle}>장바구니</Link>
+                    <Link to="/favorite" style={menuItemStyle}>찜하기</Link>
                     <Link to="/recent" style={menuItemStyle}>지금 듣고있는 강의</Link>
                     <Link to="/profile" style={menuItemStyle}>마이페이지</Link>
                     <button onClick={logout} style={{
@@ -361,7 +410,6 @@ const Header = () => {
 
 const AuthLinks = styled.div`
   display: flex;
-  gap: 20px;
   align-items: center;
 `;
 const StyledLink = styled(Link)`

@@ -15,30 +15,39 @@ const CoursedetailPage = () => {
   const { overlayTitle, overlaySub, desc, image, level, day, time, price, originalPrice, discount } = location.state || {};
   const [selectedOption, setSelectedOption] = useState('1년 수강');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCartModalOpen, setIsCartModalOpen] = useState(false);
 
-  const handleAddToCart = () => {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const alreadyExists = cart.some((item) => item.title === title);
+const handleAddToCart = () => {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const course = dummyCourses.find((c) => c.title === title);
+  if (!course) {
+    alert('강의 정보를 찾을 수 없습니다.');
+    return;
+  }
 
-    if (alreadyExists) {
-      alert('이미 장바구니에 담긴 강의입니다.');
-      return;
-    }
+  const alreadyExists = cart.some((item) => item.id === course.id);
+  if (alreadyExists) {
+    alert('이미 장바구니에 담긴 강의입니다.');
+    return;
+  }
 
-    const newItem = {
-      title: title,
-      author: overlaySub,
-      image: image,
-      option: selectedOption,
-      price: selectedOption === '1년 수강' ? 120000 : 175000,
-      originalPrice: 250000,
-    };
-
-    localStorage.setItem('cart', JSON.stringify([...cart, newItem]));
+  const newItem = {
+    id: course.id,
+    option: selectedOption,
   };
 
+  localStorage.setItem('cart', JSON.stringify([...cart, newItem]));
+  // 실시간 장바구니 뱃지 업데이트
+  window.dispatchEvent(new Event('cartUpdated'));
+
+  // 팝업 모달 열기
+  setIsCartModalOpen(true);
+};
+
+
+
   return (
-    <section style={{ margin: '70px 0' }}>
+    <section style={{ width: '100vw', margin: '70px 0' }}>
       <div
         style={{
           maxWidth: '1270px',
@@ -358,10 +367,7 @@ const CoursedetailPage = () => {
             </div>
 
             <button
-              onClick={() => {
-                handleAddToCart();
-                navigate('/cart');
-              }}
+              onClick={handleAddToCart}
               style={{
                 width: '100%',
                 padding: '20px 0',
@@ -377,6 +383,35 @@ const CoursedetailPage = () => {
             >
               수강신청 하기
             </button>
+
+            {/* 장바구니 팝업 모달 */}
+            {isCartModalOpen && (
+              <div style={{
+                position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(0,0,0,0.4)',
+                display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 9999
+              }}>
+                <div style={{ background: '#fff', padding: '30px 40px', borderRadius: '10px', maxWidth: '400px', textAlign: 'center' }}>
+                  <h3 style={{ marginBottom: '20px' }}>장바구니에 담겼습니다!</h3>
+                  <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
+                    <button
+                      onClick={() => {
+                        setIsCartModalOpen(false);
+                        navigate('/cart');
+                      }}
+                      style={{ padding: '10px 20px', backgroundColor: '#E57373', color: '#fff', borderRadius: '6px', fontWeight: 'bold' }}
+                    >
+                      장바구니로 이동
+                    </button>
+                    <button
+                      onClick={() => setIsCartModalOpen(false)}
+                      style={{ padding: '10px 20px', backgroundColor: '#eee', color: '#333', borderRadius: '6px', fontWeight: 'bold' }}
+                    >
+                      계속 쇼핑하기
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* 아이콘 메뉴 */}
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>

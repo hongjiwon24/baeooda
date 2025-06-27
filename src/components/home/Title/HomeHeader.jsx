@@ -1,20 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { useUser } from '../../../contexts/UserContext'; // 경로는 프로젝트 구조에 맞게 조정
+import { useUser } from '../../../contexts/UserContext';
 
 const HomeHeader = () => {
   const { user, logout } = useUser();
-   console.log('🟢 user.profileImage:', user?.profileImage);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
   const profileRef = useRef(null);
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
+  // 장바구니 개수 로딩
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    setCartCount(storedCart.length);
+  }, []);
 
+  // 외부 클릭 시 프로필 메뉴 닫기
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (profileRef.current && !profileRef.current.contains(e.target)) {
@@ -25,6 +27,11 @@ const HomeHeader = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
   return (
     <HeaderContainer>
       <HeaderContent>
@@ -34,7 +41,14 @@ const HomeHeader = () => {
             <img src="/logo.svg" alt="Logo" style={{ height: '23px' }} />
           </Link>
           <nav>
-            <ul style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', listStyle: 'none', padding: 0, margin: 0 }}>
+            <ul style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              listStyle: 'none',
+              padding: 0,
+              margin: 0
+            }}>
               {['🎉오픈특가', '베스트', '신규', '오픈예정'].map((item, idx) => (
                 <li key={idx}>
                   <Link
@@ -60,25 +74,49 @@ const HomeHeader = () => {
 
         {/* 오른쪽 - 로그인/회원가입 또는 프로필 */}
         <AuthLinks>
+          {/* 장바구니 아이콘 + 뱃지 */}
+          <div style={{ position: 'relative', marginRight: '10px', top: '3px' }}>
+            <Link to="/cart" style={{ display: 'inline-block' }}>
+              <img src="/icons/cart.svg" alt="장바구니" style={{ width: '26px', height: '26px' }} />
+            </Link>
+            {cartCount > 0 && (
+              <div style={{
+                position: 'absolute',
+                top: '-6px',
+                right: '-6px',
+                backgroundColor: '#ff5722',
+                color: 'white',
+                borderRadius: '50%',
+                width: '18px',
+                height: '18px',
+                fontSize: '12px',
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+                {cartCount}
+              </div>
+            )}
+          </div>
+
           {user ? (
             <>
-              <Link to="/favorite" style={{ fontSize: '14px', color: 'black' }}>찜하기</Link>
               <div ref={profileRef} style={{ position: 'relative' }}>
                 <button
-                  type="button" 
+                  type="button"
                   onClick={() => setShowProfileMenu(prev => !prev)}
                   style={{
                     width: '36px',
                     height: '36px',
                     border: 'none',
-                    backgroundColor: '#ddd',
-                    backgroundImage: `url(${user.profileImage})`, 
-                    backgroundSize: 'contain',                     
-                    backgroundPosition: 'center',                
-                    backgroundRepeat: 'no-repeat',                
+                    backgroundImage: `url(${user.profileImage})`,
+                    backgroundSize: 'contain',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundColor: '#fff',
                     cursor: 'pointer',
                     padding: 0,
-                    backgroundColor: '#fff'
                   }}
                 />
                 {showProfileMenu && (
@@ -94,10 +132,10 @@ const HomeHeader = () => {
                     zIndex: 999
                   }}>
                     <div style={{ paddingBottom: '8px', borderBottom: '1px solid #ddd', marginBottom: '8px', marginLeft: '12px' }}>
-                      <strong style={{ display: 'block', fontSize: '15px' }}> {user.nickname || user.name || user.username}님</strong>
+                      <strong style={{ display: 'block', fontSize: '15px' }}>{user.nickname || user.name || user.username}님</strong>
                       <span style={{ fontSize: '13px', color: '#666' }}>{user.email}</span>
                     </div>
-                    <Link to="/cart" style={menuItemStyle}>장바구니</Link>
+                    <Link to="/favorite" style={menuItemStyle}>찜하기</Link>
                     <Link to="/recent" style={menuItemStyle}>지금 듣고있는 강의</Link>
                     <Link to="/profile" style={menuItemStyle}>마이페이지</Link>
                     <button onClick={handleLogout} style={{
@@ -113,22 +151,16 @@ const HomeHeader = () => {
               </div>
             </>
           ) : (
-            <>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <StyledLink to="/auth?mode=login" 로그인 style={{ fontSize: '14px', color: 'black', padding: '5px 15px', textDecoration: 'none' }}>로그인</StyledLink>
+              <StyledLink to="/auth?mode=login">로그인</StyledLink>
               <StyledLink to="/auth?mode=terms" style={{
-                  fontSize: '14px',
-                  color: 'black',
-                  background: 'black',
-                  color: 'white',
-                  padding: '5px 15px',
-                  borderRadius: '50px',
-                  textDecoration: 'none'
-                  }}>
-                  회원가입
-                </StyledLink>
-              </div>
-            </>
+                background: 'black',
+                color: 'white',
+                borderRadius: '50px'
+              }}>
+                회원가입
+              </StyledLink>
+            </div>
           )}
         </AuthLinks>
       </HeaderContent>
@@ -137,7 +169,7 @@ const HomeHeader = () => {
 };
 
 const HeaderContainer = styled.header`
-  width: 100vw; // 스크롤바 보정
+  width: 100vw;
   position: fixed;
   top: 0;
   left: 0;
@@ -158,7 +190,6 @@ const HeaderContent = styled.div`
 
 const AuthLinks = styled.div`
   display: flex;
-  gap: 20px;
   align-items: center;
 `;
 
