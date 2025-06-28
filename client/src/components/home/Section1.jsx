@@ -91,6 +91,8 @@ const BestSection = () => {
                 state={{
                   desc: item.desc,
                   image: item.image,
+                  detailImage: item.detailImage,
+                  listImage: item.listImage,
                   level: item.info.level,
                   day: item.info.day,
                   time: item.info.time,

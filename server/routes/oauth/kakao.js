@@ -8,7 +8,7 @@ const getRandomProfileImage = require('../../utils/randomProfileImage');
 
 const KAKAO_CLIENT_ID = process.env.KAKAO_CLIENT_ID;
 const KAKAO_REDIRECT_URI = 'http://localhost:5173/oauth/kakao';
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 router.post('/', async (req, res) => {
   const { code } = req.body;
@@ -38,13 +38,16 @@ router.post('/', async (req, res) => {
     const email = kakaoUser.kakao_account?.email || '';
     const name = kakaoUser.kakao_account?.name || null;
     const username = `kakao_${kakaoId}`;
-    const profileImage = getRandomProfileImage();
-    const nickname = generateRandomNickname();
 
+    let user;
     const [existing] = await db.query('SELECT * FROM users WHERE username = ?', [username]);
-    let user = existing[0];
 
-    if (!user) {
+    if (existing.length > 0) {
+      user = existing[0];
+    } else {
+      const nickname = generateRandomNickname();
+      const profileImage = getRandomProfileImage();
+
       const [insertResult] = await db.query(
         'INSERT INTO users (username, email, name, provider, profileImage, nickname) VALUES (?, ?, ?, ?, ?, ?)',
         [username, email, name, 'kakao', profileImage, nickname]
@@ -55,6 +58,12 @@ router.post('/', async (req, res) => {
 
     const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
 
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
     res.json({
       success: true,
       token,
@@ -64,8 +73,8 @@ router.post('/', async (req, res) => {
         email: user.email,
         nickname: user.nickname,
         profileImage: user.profileImage,
-        provider: 'kakao'
-      }
+        provider: 'kakao',
+      },
     });
   } catch (err) {
     console.error('❌ 카카오 로그인 실패:', err.response?.data || err.message);

@@ -31,7 +31,7 @@ const GoogleRedirect = () => {
           return;
         }
 
-        login({ token, user });
+        login(user, token); // ✅ 핵심 수정
         alert(`${user.nickname || user.username}님, 환영합니다`);
         navigate('/');
       } catch (err) {

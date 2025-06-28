@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { allCourses } from '../data/dummyCourses'; // ✅ named import
 
+
 const iconMenuList = [
   { label: '미리보기', icon: '/icons/d_preview.svg', size: 35 },
   { label: '찜하기', icon: '/icons/d_heart.svg', size: 28 },
@@ -13,15 +14,16 @@ const CoursedetailPage = () => {
   const { title } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { overlayTitle, overlaySub, desc, price, originalPrice, discount } = location.state || {};
+  const { overlayTitle, overlaySub, desc, price, originalPrice, discount, detailImage } = location.state || {};
   const [selectedOption, setSelectedOption] = useState('1년 수강');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
-  const introRef = useRef(null);        // ✅ 강의 소개
-  const curriculumRef = useRef(null);   // ✅ 커리큘럼
+  const introRef = useRef(null);
+  const curriculumRef = useRef(null);
 
-const course = allCourses.find((c) => c.title === title);
-const { level, day, time, image } = course?.info || {};
+  const course = allCourses.find((c) => c.title === title);
+  const { level, day, time, image } = course?.info || {};
+  const actualDetailImage = detailImage || course?.detailImage || image || '/images/default.jpg';
 
   const scrollTo = (ref) => {
     if (!ref.current) return;
@@ -53,94 +55,39 @@ const { level, day, time, image } = course?.info || {};
     setIsCartModalOpen(true);
   };
 
+  console.log('상세 페이지로 전달된 detailImage:', detailImage);
+
   return (
     <section style={{ width: '100vw', margin: '70px 0' }}>
-      <div
-        style={{
-          maxWidth: '1270px',
-          margin: '0 auto',
-          padding: '60px 20px 40px',
-          display: 'flex',
-          gap: '40px',
-          position: 'relative'
-        }}
-      >
-        <div
-          style={{
-            maxWidth: '800px',
-            margin: '0 auto',
-            fontFamily: 'sans-serif',
-            color: '#222',
-          }}
-        >
-          {/* 상단 썸네일 + 제목 + 정보줄 */}
-          <div
-            style={{
-              borderRadius: '10px',
-              overflow: 'hidden',
-              marginBottom: '40px',
-              boxShadow: '0 2px 6px rgba(0,0,0,0.08)',
-            }}
-          >
+      <div style={{ maxWidth: '1270px', margin: '0 auto', padding: '60px 20px 40px', display: 'flex', gap: '40px', position: 'relative' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto', fontFamily: 'sans-serif', color: '#222' }}>
+          <div style={{ borderRadius: '10px', overflow: 'hidden', marginBottom: '40px', boxShadow: '0 2px 6px rgba(0,0,0,0.08)' }}>
             <div
               style={{
                 position: 'relative',
                 width: '100%',
                 height: '410px',
-                backgroundImage: `url(${course?.detailImage || course?.image || '/images/default.jpg'})`,
+                backgroundImage: `url(${actualDetailImage})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }}
             >
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: '20px',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  color: '#fff',
-                  fontSize: '24px',
-                  fontWeight: 'bold',
-                  textShadow: '1px 1px 3px rgba(0,0,0,0.6)',
-                }}
-              >
-                설명 연동
+            {desc && (
+              <div style={{ position: 'absolute', bottom: '43%', left: '50%', transform: 'translateX(-50%)', color: '#fff', fontSize: '24px', fontWeight: 'bold', textShadow: '1px 1px 3px rgba(0,0,0,0.6)', textAlign: 'center' }}>
+                {desc}
               </div>
+            )}
             </div>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'end',
-                gap: '24px',
-                padding: '0 45px',
-                fontSize: '14px',
-                backgroundColor: '#fff',
-                borderTop: '1px solid #eee',
-                height: '66px',
-                alignItems: 'center'
-              }}
-            >
-             <div style={{ display: 'flex', alignItems: 'center', gap: '24px', padding: '0 45px', fontSize: '14px', backgroundColor: '#fff', borderTop: '1px solid #eee', height: '66px' }}>
-                {/* 난이도 */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <img
-                    src={`/icons/level${level === '초급' ? 1 : level === '중급' ? 2 : level === '고급' ? 3 : 1}.svg`}
-                    alt="레벨 아이콘"
-                    style={{ width: '20px', height: '20px', marginBottom: '2px' }}
-                  />
-                  난이도   {level || '정보 없음'}
+            <div style={{ display: 'flex', justifyContent: 'end', gap: '24px', padding: '0 45px', fontSize: '16px', backgroundColor: '#fff', borderTop: '1px solid #eee', height: '66px', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '24px', padding: '0 45px', fontSize: '16px', backgroundColor: '#fff', borderTop: '1px solid #eee', height: '66px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '13px' }}>
+                  <img src={`/icons/level${level === '초급' ? 1 : level === '중급' ? 2 : level === '고급' ? 3 : 1}.svg`} alt="레벨 아이콘" style={{ width: '23px', height: '23px', marginBottom: '2px' }} />
+                  <span style={{marginRight: '3px'}}>난이도</span> {level || '정보 없음'}
                 </div>
-
-                <div style={{ color: '#898989', fontSize: '16px'}}>ㅣ </div>
-
-                {/* 소요 시간 */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <img
-                    src="/icons/time.svg"
-                    alt="소요시간 아이콘"
-                    style={{ width: '20px', height: '20px' }}
-                  />
-                  소요 시간 {day || '정보 없음'}
+                <div style={{ color: '#898989', fontSize: '16px' }}>ㅣ </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '13px' }}>
+                  <img src="/icons/time.svg" alt="소요시간 아이콘" style={{ width: '23px', height: '23px' }} />
+                  <span style={{marginRight: '3px'}}>소요 시간</span> {day || '정보 없음'}
                 </div>
               </div>
             </div>

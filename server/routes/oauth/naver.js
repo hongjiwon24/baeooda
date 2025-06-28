@@ -9,7 +9,7 @@ const getRandomProfileImage = require('../../utils/randomProfileImage');
 const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID;
 const NAVER_CLIENT_SECRET = process.env.NAVER_CLIENT_SECRET;
 const NAVER_REDIRECT_URI = 'http://localhost:5173/oauth/naver';
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 router.post('/', async (req, res) => {
   const { code, state } = req.body;
@@ -43,13 +43,15 @@ router.post('/', async (req, res) => {
     const email = profile.email || '';
     const name = profile.name || null;
     const username = `naver_${profile.id}`;
-    const profileImage = getRandomProfileImage();
-    const nickname = generateRandomNickname();
 
+    let user;
     const [existing] = await db.query('SELECT * FROM users WHERE username = ?', [username]);
-    let user = existing[0];
+    if (existing.length > 0) {
+      user = existing[0];
+    } else {
+      const nickname = generateRandomNickname();
+      const profileImage = getRandomProfileImage();
 
-    if (!user) {
       const [insertResult] = await db.query(
         'INSERT INTO users (username, email, name, provider, profileImage, nickname) VALUES (?, ?, ?, ?, ?, ?)',
         [username, email, name, 'naver', profileImage, nickname]
@@ -60,6 +62,12 @@ router.post('/', async (req, res) => {
     }
 
     const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
+
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 7 * 24 * 60 * 60 * 1000
+    });
 
     res.json({
       success: true,

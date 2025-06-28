@@ -5,7 +5,7 @@ import { useUser } from "../../contexts/UserContext";
 const NaverRedirect = () => {
   const { login } = useUser();
   const navigate = useNavigate();
-  const hasCalled = useRef(false); // ✅ 리렌더링해도 유지됨
+  const hasCalled = useRef(false);
 
   useEffect(() => {
     if (hasCalled.current) return;
@@ -37,7 +37,7 @@ const NaverRedirect = () => {
           return;
         }
 
-        login({ token: data.token, user: data.user });
+        login(data.user, data.token); // ✅ 핵심 수정
         alert(`${data.user.nickname || data.user.username}님, 환영합니다`);
         navigate("/");
       } catch (err) {

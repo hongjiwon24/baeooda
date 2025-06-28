@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { dummyCourses } from '../data/dummyCourses'; // ✅ named import
-
+import { allCourses } from '../data/dummyCourses'; // ✅ 수정: allCourses 사용
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
 
-  // ✅ 장바구니 + 체크 상태 동기화
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
     const selectedFromStorage = JSON.parse(localStorage.getItem('selectedIds')) || [];
 
     const enriched = storedCart
       .map(({ id, option }) => {
-        const course = dummyCourses.find((c) => c.id === id);
+        const course = allCourses.find((c) => c.id === id);
         if (!course) return null;
 
         const price = option === '1년 수강' ? 120000 : 175000;
@@ -49,10 +47,9 @@ const CartPage = () => {
   };
 
   const handleCheckboxChange = (id) => {
-    const updated =
-      selectedIds.includes(id)
-        ? selectedIds.filter((item) => item !== id)
-        : [...selectedIds, id];
+    const updated = selectedIds.includes(id)
+      ? selectedIds.filter((item) => item !== id)
+      : [...selectedIds, id];
 
     updateSelectedIds(updated);
   };
@@ -170,7 +167,6 @@ const CartPage = () => {
                     <div style={{ textDecoration: 'line-through', color: '#999', fontSize: '13px' }}>₩{item.originalPrice.toLocaleString()}</div>
                     <div style={{ fontWeight: 'bold', color: '#000' }}>₩{item.price.toLocaleString()}</div>
                   </div>
-                  {/* 삭제 버튼 */}
                   <button onClick={() => handleDeleteOne(item.id)} style={{ top: '10px', right: '10px', border: 'none', background: 'transparent', fontSize: '18px', cursor: 'pointer', color: '#888' }}>×</button>
                 </div>
               ))}

@@ -54,7 +54,6 @@ router.post('/login', async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(401).json({ message: '비밀번호 틀림' });
 
-    // 닉네임 및 프로필 이미지가 없으면 랜덤으로 할당
     if (!user.nickname) {
       const newNickname = generateRandomNickname();
       await db.query('UPDATE users SET nickname = ? WHERE id = ?', [newNickname, user.id]);
@@ -97,17 +96,15 @@ router.get('/me', authMiddleware, async (req, res) => {
     if (!user) return res.status(404).json({ message: '사용자를 찾을 수 없습니다.' });
 
     res.json({
-      user: {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        year: user.year,
-        month: user.month,
-        day: user.day,
-        profileImage: user.profileImage,
-        nickname: user.nickname,
-        provider: user.provider || 'local'
-      }
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      year: user.year,
+      month: user.month,
+      day: user.day,
+      profileImage: user.profileImage,
+      nickname: user.nickname,
+      provider: user.provider || 'local'
     });
   } catch (err) {
     console.error('유저 정보 확인 오류:', err.message);
@@ -147,12 +144,11 @@ router.post('/reset-password', async (req, res) => {
       return res.json({ success: false });
     }
 
-    const tempPassword = Math.random().toString(36).slice(2, 10); // 임시 비밀번호 생성
+    const tempPassword = Math.random().toString(36).slice(2, 10);
     const hashed = await bcrypt.hash(tempPassword, 10);
 
     await db.query('UPDATE users SET password = ? WHERE id = ?', [hashed, user[0].id]);
 
-    // 이메일 전송 로직 (예: nodemailer)
     await sendEmail(email, `임시 비밀번호는 ${tempPassword} 입니다.`);
 
     res.json({ success: true });
@@ -161,6 +157,5 @@ router.post('/reset-password', async (req, res) => {
     res.status(500).json({ success: false });
   }
 });
-
 
 module.exports = router;

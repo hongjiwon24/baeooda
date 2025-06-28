@@ -5,7 +5,7 @@ const dummyCourses = [
   // [IT·디지털]
     
     // 프로그래밍
-  {
+   {
     id: 1,
     title: '왕초보를 위한 HTML/CSS 기초 마스터',
     mainCategory: 'IT·디지털',
@@ -16,7 +16,8 @@ const dummyCourses = [
     price: '₩89,000',
     originalPrice: '₩119,000',
     image: '/course/course_it_01.jpg',
-    detailImage: '/course/course_it_01(2).jpg',
+    detailImage: '/course/course_it_01_2.jpg',
+    desc: 'HTML과 CSS의 기본 개념을 쉽고 빠르게 마스터할 수 있는 강의',
     author: '미듬',
     tag: ['HTML', 'CSS'],
     info: { level: '초급', day: '35일' }
@@ -32,12 +33,12 @@ const dummyCourses = [
     price: '₩96,000',
     originalPrice: '₩120,000',
     image: '/course/course_it_02.jpg',
-    detailImage: '/course/course_it_02(2).jpg',
+    detailImage: '/course/course_it_02_2.jpg',
+    desc: 'JavaScript 기초부터 ES6+ 최신 문법까지 단계별로 배워보는 실전 강의.',
     author: '미듬',
     tag: ['JavaScript', '자바스크립트'],
     info: { level: '초급', day: '35일' }
   },
-    // 디자인/3D
   {
     id: 3,
     title: 'Figma로 UX/UI 디자인 실무 배우기',
@@ -49,12 +50,13 @@ const dummyCourses = [
     price: '₩77,000',
     originalPrice: '₩110,000',
     image: '/course/course_it_09.jpg',
-    detailImage: '/course/course_it_09(2).jpg',
+    detailImage: '/course/course_it_09_2.jpg',
+    desc: 'Figma를 활용한 UX/UI 디자인 실무 프로젝트를 통해 실력을 쌓아보자',
     author: '서하늘',
     tag: ['피그마', 'UX/UI', '디자인'],
     info: { level: '초급', day: '35일' }
   },
-    {
+  {
     id: 4,
     title: 'Figma로 UX/UI 디자인 실무 배우기',
     mainCategory: 'IT·디지털',
@@ -65,12 +67,12 @@ const dummyCourses = [
     price: '₩77,000',
     originalPrice: '₩110,000',
     image: '/course/course_it_09.jpg',
-    detailImage: '/course/course_it_09(2).jpg',
+    detailImage: '/course/course_it_09_2.jpg',
+    desc: 'Figma를 활용한 UX/UI 디자인 실무 프로젝트를 통해 실력을 쌓아보자.',
     author: '서하늘',
     tag: ['피그마', 'UX/UI', '디자인'],
     info: { level: '초급', day: '35일' }
   },
-    // 사진/영상
   {
     id: 5,
     title: '영상 편집 기초부터 프리미어 프로 마스터',
@@ -82,9 +84,10 @@ const dummyCourses = [
     price: '₩94,000',
     originalPrice: '₩130,000',
     image: '/course/course_it_07.jpg',
-    detailImage: '/course/course_it_07(2).jpg',
+    detailImage: '/course/course_it_07_2.jpg',
+    desc: '프리미어 프로를 이용한 영상 편집 기초부터 실전까지 한 번에 마스터.',
     author: '이하린',
-    tag: ['프리미어프로', '영상편집',],
+    tag: ['프리미어프로', '영상편집'],
     info: { level: '초급', day: '35일' }
   },
   {
@@ -98,12 +101,12 @@ const dummyCourses = [
     price: '₩94,000',
     originalPrice: '₩130,000',
     image: '/course/course_it_07.jpg',
-    detailImage: '/course/course_it_07(2).jpg',
+    detailImage: '/course/course_it_07_2.jpg',
+    desc: '프리미어 프로를 이용한 영상 편집 기초부터 실전까지 한 번에 마스터.',
     author: '이하린',
-    tag: ['프리미어프로', '영상편집',],
+    tag: ['프리미어프로', '영상편집'],
     info: { level: '초급', day: '35일' }
   },
-    // AI·인공지능
   {
     id: 7,
     title: 'AI 시대를 위한 GPT 기초와 실습',
@@ -115,7 +118,8 @@ const dummyCourses = [
     price: '₩78,000',
     originalPrice: '₩130,000',
     image: '/course/course_it_08.jpg',
-    detailImage: '/course/course_it_08(2).jpg',
+    detailImage: '/course/course_it_08_2.jpg',
+    desc: 'GPT와 챗지피티의 기본 원리부터 실습까지 실전 활용법 배우기.',
     author: '김성은',
     tag: ['AI', 'GPT', '챗지피티'],
     info: { level: '초급', day: '35일' }
@@ -131,7 +135,8 @@ const dummyCourses = [
     price: '₩78,000',
     originalPrice: '₩130,000',
     image: '/course/course_it_08.jpg',
-    detailImage: '/course/course_it_08(2).jpg',
+    detailImage: '/course/course_it_08_2.jpg',
+    desc: 'GPT와 챗지피티의 기본 원리부터 실습까지 실전 활용법을 배우기',
     author: '김성은',
     tag: ['AI', 'GPT', '챗지피티'],
     info: { level: '초급', day: '35일' }
@@ -151,7 +156,8 @@ const dummyCourses = [
     price: '₩76,000',
     originalPrice: '₩95,000',
     image: '/course/course_bn_01.jpg',
-    detailImage: '/course/course_bn_01(2).jpg',
+    detailImage: '/course/course_bn_01_2.jpg',
+    desc: '마케팅의 기본 개념부터 실습까지 처음 시작하는 분들을 위한 강의',
     author: '이은지',
     tag: ['마케팅', 'SNS'],
     info: { level: '초급', day: '35일' }
@@ -167,12 +173,12 @@ const dummyCourses = [
     price: '₩76,000',
     originalPrice: '₩95,000',
     image: '/course/course_bn_01.jpg',
-    detailImage: '/course/course_bn_01(2).jpg',
+    detailImage: '/course/course_bn_01_2.jpg',
+    desc: '마케팅의 기본 개념부터 실습까지 처음 시작하는 분들을 위한 강의',
     author: '이은지',
     tag: ['마케팅', 'SNS'],
     info: { level: '초급', day: '35일' }
   },
-    // 경영 전략
   {
     id: 11,
     title: '성장하는 기업의 경영 전략',
@@ -184,7 +190,8 @@ const dummyCourses = [
     price: '₩90,000',
     originalPrice: '₩120,000',
     image: '/course/course_bn_02.jpg',
-    detailImage: '/course/course_bn_02(2).jpg',
+    detailImage: '/course/course_bn_02_2.jpg',
+    desc: '기업의 성장 전략과 비즈니스 모델 수립에 필요한 실전 전략 강의.',
     author: '김태경',
     tag: ['경영', 'CEO'],
     info: { level: '초급', day: '35일' }
@@ -200,12 +207,12 @@ const dummyCourses = [
     price: '₩90,000',
     originalPrice: '₩120,000',
     image: '/course/course_bn_02.jpg',
-    detailImage: '/course/course_bn_02(2).jpg',
+    detailImage: '/course/course_bn_02_2.jpg',
+    desc: '기업의 성장 전략과 비즈니스 모델 수립에 필요한 실전 전략 강의.',
     author: '김태경',
     tag: ['경영', 'CEO'],
     info: { level: '초급', day: '35일' }
   },
-    // 파이낸스 기초
   {
     id: 13,
     title: '한 번에 이해하는 파이낸스 기초',
@@ -217,7 +224,8 @@ const dummyCourses = [
     price: '₩63,000',
     originalPrice: '₩90,000',
     image: '/course/course_bn_02.jpg',
-    detailImage: '/course/course_bn_02(2).jpg',
+    detailImage: '/course/course_bn_02_2.jpg',
+    desc: '재무제표와 자산 관리의 기본을 배울 수 있는 파이낸스 입문 강의',
     author: '신다혜',
     tag: ['파이낸스'],
     info: { level: '초급', day: '35일' }
@@ -233,12 +241,12 @@ const dummyCourses = [
     price: '₩63,000',
     originalPrice: '₩90,000',
     image: '/course/course_bn_02.jpg',
-    detailImage: '/course/course_bn_02(2).jpg',
+    detailImage: '/course/course_bn_02_2.jpg',
+    desc: '재무제표와 자산 관리의 기본을 배울 수 있는 파이낸스 입문 강의',
     author: '신다혜',
     tag: ['파이낸스'],
     info: { level: '초급', day: '35일' }
   },
-    // 창업 전략
   {
     id: 15,
     title: '창업 전략: 아이디어부터 비즈니스 모델까지',
@@ -250,7 +258,8 @@ const dummyCourses = [
     price: '₩117,000',
     originalPrice: '₩180,000',
     image: '/course/course_bn_04.jpg',
-   detailImage: '/course/course_bn_04(2).jpg',
+    detailImage: '/course/course_bn_04_2.jpg',
+    desc: '창업 아이디어 발굴부터 수익 모델 설계까지 전 과정을 다루는 실전 강의.',
     author: '배도현',
     tag: ['창업', '아이디어'],
     info: { level: '초급', day: '35일' }
@@ -266,7 +275,8 @@ const dummyCourses = [
     price: '₩117,000',
     originalPrice: '₩180,000',
     image: '/course/course_bn_04.jpg',
-    detailImage: '/course/course_bn_04(2).jpg',
+    detailImage: '/course/course_bn_04_2.jpg',
+    desc: '창업 아이디어 발굴부터 수익 모델 설계까지 전 과정을 다루는 실전 강의.',
     author: '배도현',
     tag: ['창업', '아이디어'],
     info: { level: '초급', day: '35일' }
@@ -283,7 +293,7 @@ const dummyCourses = [
     price: '₩68,000',
     originalPrice: '₩85,000',
     image: '/course/course_life_01.jpg',
-    detailImage: '/course/course_life_01(2).jpg',
+    detailImage: '/course/course_life_01_2.jpg',
     author: '최예진',
     tag: ['컴퓨터', '컴퓨터활용'],
     info: { level: '초급', day: '35일' }
@@ -299,7 +309,7 @@ const dummyCourses = [
     price: '₩68,000',
     originalPrice: '₩85,000',
     image: '/course/course_life_01.jpg',
-    detailImage: '/course/course_life_01(2).jpg',
+    detailImage: '/course/course_life_01_2.jpg',
     author: '최예진',
     tag: ['컴퓨터', '컴퓨터활용'],
     info: { level: '초급', day: '35일' }
@@ -316,7 +326,7 @@ const dummyCourses = [
     price: '₩45,000',
     originalPrice: '₩60,000',
     image: '/course/course_life_01.jpg',
-    detailImage: '/course/course_life_01(2).jpg',
+    detailImage: '/course/course_life_01_2.jpg',
     author: '홍재호',
     tag: ['자격증', '국가공인자격증'],
     info: { level: '초급', day: '35일' }
@@ -332,7 +342,7 @@ const dummyCourses = [
     price: '₩45,000',
     originalPrice: '₩60,000',
     image: '/course/course_life_01.jpg',
-    detailImage: '/course/course_life_01(2).jpg',
+    detailImage: '/course/course_life_01_2.jpg',
     author: '홍재호',
     tag: ['자격증', '국가공인자격증'],
     info: { level: '초급', day: '35일' }
@@ -349,7 +359,7 @@ const dummyCourses = [
     price: '₩56,000',
     originalPrice: '₩80,000',
     image: '/course/course_life_01.jpg',
-    detailImage: '/course/course_life_01(2).jpg',
+    detailImage: '/course/course_life_01_2.jpg',
     author: '장윤서',
     tag: ['문서작성', '실무'],
     info: { level: '초급', day: '35일' }
@@ -365,7 +375,7 @@ const dummyCourses = [
     price: '₩56,000',
     originalPrice: '₩80,000',
     image: '/course/course_life_01.jpg',
-    detailImage: '/course/course_life_01(2).jpg',
+    detailImage: '/course/course_life_01_2.jpg',
     author: '장윤서',
     tag: ['문서작성', '실무'],
     info: { level: '초급', day: '35일' }
@@ -382,7 +392,7 @@ const dummyCourses = [
     price: '₩61,000',
     originalPrice: '₩90,000',
     image: '/course/course_life_01.jpg',
-    detailImage: '/course/course_life_01(2).jpg',
+    detailImage: '/course/course_life_01_2.jpg',
     author: '권도윤',
     tag: ['엑셀', '구글',],
     info: { level: '초급', day: '35일' }
@@ -398,7 +408,7 @@ const dummyCourses = [
     price: '₩61,000',
     originalPrice: '₩90,000',
     image: '/course/course_life_01.jpg',
-    detailImage: '/course/course_life_01(2).jpg',
+    detailImage: '/course/course_life_01_2.jpg',
     author: '권도윤',
     tag: ['엑셀', '구글',],
     info: { level: '초급', day: '35일' }
@@ -417,7 +427,7 @@ const dummyCourses = [
     price: '₩63,000',
     originalPrice: '₩90,000',
     image: '/course/course_art_01.jpg',
-    detailImage: '/course/course_art_01(2).jpg',
+    detailImage: '/course/course_art_01_2.jpg',
     author: '하정우',
     tag: ['글쓰기', '작문'],
     info: { level: '초급', day: '35일' }
@@ -433,7 +443,7 @@ const dummyCourses = [
     price: '₩63,000',
     originalPrice: '₩90,000',
     image: '/course/course_art_01.jpg',
-    detailImage: '/course/course_art_01(2).jpg',
+    detailImage: '/course/course_art_01_2.jpg',
     author: '하정우',
     tag: ['글쓰기', '작문'],
     info: { level: '초급', day: '35일' }
@@ -450,7 +460,7 @@ const dummyCourses = [
     price: '₩45,000',
     originalPrice: '₩60,000',
     image: '/course/course_art_01.jpg',
-    detailImage: '/course/course_art_01(2).jpg',
+    detailImage: '/course/course_art_01_2.jpg',
     author: '문유정',
     tag: ['캘리그라피', '글씨'],
     info: { level: '초급', day: '35일' }
@@ -466,7 +476,7 @@ const dummyCourses = [
     price: '₩45,000',
     originalPrice: '₩60,000',
     image: '/course/course_art_01.jpg',
-    detailImage: '/course/course_art_01(2).jpg',
+    detailImage: '/course/course_art_01_2.jpg',
     author: '문유정',
     tag: ['캘리그라피', '글씨'],
     info: { level: '초급', day: '35일' }
@@ -483,7 +493,7 @@ const dummyCourses = [
     price: '₩56,000',
     originalPrice: '₩70,000',
     image: '/course/course_art_01.jpg',
-    detailImage: '/course/course_art_01(2).jpg',
+    detailImage: '/course/course_art_01_2.jpg',
     author: '이건우',
     tag: ['음악', '작곡'],
     info: { level: '초급', day: '35일' }
@@ -499,7 +509,7 @@ const dummyCourses = [
     price: '₩56,000',
     originalPrice: '₩70,000',
     image: '/course/course_art_01.jpg',
-    detailImage: '/course/course_art_01(2).jpg',
+    detailImage: '/course/course_art_01_2.jpg',
     author: '이건우',
     tag: ['음악', '작곡'],
     info: { level: '초급', day: '35일' }
@@ -516,7 +526,7 @@ const dummyCourses = [
     price: '₩58,000',
     originalPrice: '₩89,000',
     image: '/course/course_art_01.jpg',
-    detailImage: '/course/course_art_01(2).jpg',
+    detailImage: '/course/course_art_01_2.jpg',
     author: '윤아름',
     tag: ['타로', '사주'],
     info: { level: '초급', day: '35일' }
@@ -532,7 +542,7 @@ const dummyCourses = [
     price: '₩58,000',
     originalPrice: '₩89,000',
     image: '/course/course_art_01.jpg',
-    detailImage: '/course/course_art_01(2).jpg',
+    detailImage: '/course/course_art_01_2.jpg',
     author: '윤아름',
     tag: ['타로', '사주'],
     info: { level: '초급', day: '35일' }

@@ -1,61 +1,44 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
-export const UserContext = createContext(null);
+const UserContext = createContext();
+
+export const API_URL = import.meta.env.VITE_API_URL;
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
+  // ✅ 앱 시작 시 localStorage의 JWT 토큰을 이용해 로그인 상태 유지
   useEffect(() => {
-    // 🔹 우선 로컬에 저장된 유저 정보 반영 (에러 방지 포함)
-    try {
-      const storedUser = localStorage.getItem('loggedInUser');
-      if (storedUser) {
-        const parsedUser = JSON.parse(storedUser);
-        if (parsedUser && typeof parsedUser === 'object') {
-          setUser(parsedUser);
-        }
-      }
-    } catch (err) {
-      console.error('❌ 로컬 유저 정보 파싱 실패:', err);
-      localStorage.removeItem('loggedInUser');
-    }
-
-    // 🔹 백엔드에 토큰 유효성 확인 요청
-    const restoreUser = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) return;
-
-      try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        setUser(res.data.user);
-        localStorage.setItem('loggedInUser', JSON.stringify(res.data.user));
-      } catch (err) {
-        console.error('❌ 사용자 정보 복원 실패:', err.response?.data || err.message);
-        localStorage.removeItem('token');
-        localStorage.removeItem('loggedInUser');
+    const token = localStorage.getItem('token');
+    if (token) {
+      axios.get(`${API_URL}/api/auth/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        withCredentials: true
+      })
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch(() => {
         setUser(null);
-      }
-    };
-
-    restoreUser();
+        localStorage.removeItem('token');
+      });
+    }
   }, []);
 
-  const login = ({ token, user }) => {
+  // ✅ 로그인 시 토큰 저장
+  const login = (userData, token) => {
+    setUser(userData);
     localStorage.setItem('token', token);
-    localStorage.setItem('loggedInUser', JSON.stringify(user));
-    setUser(user);
   };
 
+  // ✅ 로그아웃 시 토큰 제거 및 상태 초기화
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('loggedInUser');
     setUser(null);
+    localStorage.removeItem('token');
+    axios.post(`${API_URL}/api/auth/logout`, {}, { withCredentials: true });
   };
 
   return (

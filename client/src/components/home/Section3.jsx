@@ -11,6 +11,7 @@ const CourseCards = ({ data }) => (
     to={`/courses/${encodeURIComponent(data.title)}`}
     state={{
       image: data.image,
+      detailImage: data.detailImage,
       desc: data.desc,
       level: data.info.level,
       day: data.info.day,
